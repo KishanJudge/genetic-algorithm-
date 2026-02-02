@@ -5,34 +5,82 @@ public class base {
     
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        int timesForAverage = 20;
+        int graphStart = 6;
+        int graphEnd = 14;
 
+        /*task 8
         System.out.println("Enter solution length: ");
         int bitstringSize = scanner.nextInt(); // length 𝑛
         while ((bitstringSize % 2) != 0) {
             System.out.println("Solution length must be even: ");
             bitstringSize = scanner.nextInt();
-        }
-
-        final int populationSize = 100;
-        int mutationRate = 15;
-        String[] population = createPopulation(bitstringSize, populationSize);
-
-
-        /*task five
-        for (int x = 0; x < populationSize; x++) {
-            score(population[x]);
-            population[x] = mutation(mutationRate, bitstringSize, population[x]);
-        }
-
-        String[] newPopulation = crossover(population, populationSize, bitstringSize);
-
-        //task six
-        for (int x2 = 0; x2 < populationSize; x2++) {
-            if (evaluate(population, newPopulation, populationSize)) {
-                population[x2] = newPopulation[x2];
-            }
         }*/
 
+        int arrSize = graphEnd - graphStart + 1;
+        int[] averageGenerations = new int[arrSize];
+        float[] averageTime = new float[arrSize];
+        int[] valueOfN = new int[arrSize];
+
+        for (int n = graphStart; n < graphEnd + 1; n++) {
+            int bitstringSize = n;
+            valueOfN[n - graphStart] = n;
+            final int populationSize = 100;
+            int mutationRate = 15;
+            int totalGenerations = 0;
+            float totalTime = 0;
+            for (int n2 = 0; n2 < timesForAverage; n2++) {
+                long startTime = System.nanoTime();
+                String[] population = createPopulation(bitstringSize, populationSize);
+
+                boolean perfectCheck = isPerfect(populationSize, population, bitstringSize);
+                int generations = 0;
+
+                while (!perfectCheck) {
+
+                    String[] newPopulation = crossover(population, populationSize, bitstringSize);
+
+                    for (int x = 0; x < populationSize; x++) {
+                        newPopulation[x] = mutation(mutationRate, bitstringSize, newPopulation[x]);
+                    }
+
+                    for (int x2 = 0; x2 < populationSize; x2++) {
+                        if (evaluate(population[x2], newPopulation[x2], populationSize)) {
+                            population[x2] = newPopulation[x2];
+                        }
+                    }
+
+                    generations++;
+                    perfectCheck = isPerfect(populationSize, population, bitstringSize);
+                }
+
+                long endTime = System.nanoTime();
+                float finalTime = (endTime - startTime) / 1000000;
+
+                /*for (int x3 = 0; x3 < populationSize; x3++) {
+                    System.out.println(population[x3]);
+                }*/
+
+                //System.out.println("algorithm took " + generations + " generations");
+
+                totalGenerations = totalGenerations + generations;
+                totalTime = totalTime + finalTime;
+
+            }
+
+            averageGenerations[n - graphStart] = (totalGenerations / timesForAverage);
+            averageTime[n - graphStart] = (totalTime / (float) (timesForAverage));
+        }
+
+        for (int x4 = 0; x4 < arrSize; x4++) {
+            System.out.println("n: " + valueOfN[x4]);
+            System.out.println("generations: " + averageGenerations[x4]);
+            System.out.println("time: " + averageTime[x4]);
+        }
+
+        /*final int populationSize = 100;
+        int mutationRate = 15;
+        String[] population = createPopulation(bitstringSize, populationSize);
 
         //task seven
         boolean perfectCheck = isPerfect(populationSize, population, bitstringSize);
@@ -61,7 +109,22 @@ public class base {
         }
 
         System.out.println("algorithm took " + generations + " generations");
+        */
 
+        /*task five
+        for (int x = 0; x < populationSize; x++) {
+            score(population[x]);
+            population[x] = mutation(mutationRate, bitstringSize, population[x]);
+        }
+
+        String[] newPopulation = crossover(population, populationSize, bitstringSize);
+
+        //task six
+        for (int x2 = 0; x2 < populationSize; x2++) {
+            if (evaluate(population, newPopulation, populationSize)) {
+                population[x2] = newPopulation[x2];
+            }
+        }*/
     }
 
     //task one
