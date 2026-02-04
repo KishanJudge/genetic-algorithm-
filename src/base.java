@@ -1,3 +1,5 @@
+package src;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -125,6 +127,10 @@ public class base {
                 population[x2] = newPopulation[x2];
             }
         }*/
+
+        graph graphObject = new graph(averageGenerations, averageTime, valueOfN);
+        graphObject.displayGraph();
+
     }
 
     //task one
@@ -211,7 +217,7 @@ public class base {
         return false;
     }
 
-    //task seven
+
     public static boolean isPerfect(int populationSize, String[] population, int bitstringSize) {
         int fullPerfectCheck = 0;
         for (int i = 0; i < populationSize; i++) {
