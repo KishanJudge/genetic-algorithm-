@@ -8,17 +8,18 @@ public class base {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int timesForAverage = 20;
-        int graphStart = 6;
-        int graphEnd = 14;
+        int graphStart = 1;
+        int graphEnd = 30;
 
-        /*task 8
-        System.out.println("Enter solution length: ");
+        //task eight
+        /*System.out.println("Enter solution length: ");
         int bitstringSize = scanner.nextInt(); // length 𝑛
         while ((bitstringSize % 2) != 0) {
             System.out.println("Solution length must be even: ");
             bitstringSize = scanner.nextInt();
         }*/
 
+        //task nine
         int arrSize = graphEnd - graphStart + 1;
         int[] averageGenerations = new int[arrSize];
         float[] averageTime = new float[arrSize];
@@ -59,12 +60,6 @@ public class base {
                 long endTime = System.nanoTime();
                 float finalTime = (endTime - startTime) / 1000000;
 
-                /*for (int x3 = 0; x3 < populationSize; x3++) {
-                    System.out.println(population[x3]);
-                }*/
-
-                //System.out.println("algorithm took " + generations + " generations");
-
                 totalGenerations = totalGenerations + generations;
                 totalTime = totalTime + finalTime;
 
@@ -80,11 +75,11 @@ public class base {
             System.out.println("time: " + averageTime[x4]);
         }
 
+        //task seven
         /*final int populationSize = 100;
         int mutationRate = 15;
         String[] population = createPopulation(bitstringSize, populationSize);
 
-        //task seven
         boolean perfectCheck = isPerfect(populationSize, population, bitstringSize);
         int generations = 0;
 
@@ -216,7 +211,6 @@ public class base {
         }
         return false;
     }
-
 
     public static boolean isPerfect(int populationSize, String[] population, int bitstringSize) {
         int fullPerfectCheck = 0;
